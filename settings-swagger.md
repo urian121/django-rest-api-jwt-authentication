@@ -66,3 +66,6 @@ python manage.py runserver
 - **Swagger UI**: `http://127.0.0.1:8000/api/docs/`
 - **ReDoc**: `http://127.0.0.1:8000/api/redoc/`
 - **Schema JSON**: `http://127.0.0.1:8000/api/schema/`
+
+Documentación extra:
+- `https://pypi.org/project/drf-spectacular/`
