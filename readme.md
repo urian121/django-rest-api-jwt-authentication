@@ -10,6 +10,8 @@ venv\Scripts\activate     # Windows
 ## 2. Instalar dependencias
 ```bash
 pip install django djangorestframework
+pip install django-cors-headers
+pip install drf-spectacular
 ```
 
 ## 3. Crear proyecto Django
@@ -130,3 +132,8 @@ python manage.py runserver
 ```bash
 pip freeze > requirements.txt
 ```
+
+Documentación extra:
+- `https://pypi.org/project/django-cors-headers/`
+- `https://pypi.org/project/drf-spectacular/`
+- `https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html`

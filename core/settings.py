@@ -40,9 +40,12 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'api',
+    'corsheaders',
+    'drf_spectacular', # Swagger/OpenAPI
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # Middleware para CORS
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -123,3 +126,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configuración de REST Framework para Swagger/OpenAPI
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# Configuración de Swagger/OpenAPI
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'My API',
+    'DESCRIPTION': 'API documentation',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}

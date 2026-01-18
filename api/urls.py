@@ -1,13 +1,10 @@
 from django.urls import path, include
-# Router para el modelo Task
 from rest_framework.routers import DefaultRouter
-from .views import TaskViewSet # Importando TaskViewSet de views
+from .views import TaskViewSet
 
-# TaskViewSet: Vista para el modelo Task
 router = DefaultRouter()
-router.register(r'tasks', TaskViewSet) # Registro de TaskViewSet en el router
+router.register(r'tasks', TaskViewSet)
 
-# urlpatterns: Patrones de URL para la API
 urlpatterns = [
     path('', include(router.urls)),
 ]
