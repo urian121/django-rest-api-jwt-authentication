@@ -15,9 +15,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'drf_spectacular',
     'rest_framework_simplejwt',  # Opcional (solo para traducciones)
-    'myapp',
+    'api',
 ]
 ```
 
@@ -29,7 +28,6 @@ from datetime import timedelta
 ## 4. Configurar REST_FRAMEWORK (settings.py)
 ```python
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -42,8 +40,8 @@ REST_FRAMEWORK = {
 ## 5. Configurar SIMPLE_JWT (settings.py)
 ```python
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
     'UPDATE_LAST_LOGIN': False,
@@ -67,10 +65,6 @@ SIMPLE_JWT = {
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
 
     'JTI_CLAIM': 'jti',
-
-    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 ```
 
@@ -78,7 +72,6 @@ SIMPLE_JWT = {
 ```python
 from django.contrib import admin
 from django.urls import path, include
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -87,17 +80,12 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('myapp.urls')),
-    
+    path('api/', include('api.urls')),
+
     # JWT
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    
-    # Schema
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
 ```
 
@@ -166,21 +154,13 @@ from .serializers import TaskSerializer
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [IsAuthenticated]  # Requiere autenticación
+    permission_classes = [IsAuthenticated]
     
-    # O para permitir acceso público a ciertos métodos:
     def get_permissions(self):
         if self.action == 'list':
             return [AllowAny()]
         return [IsAuthenticated()]
 ```
 
-## 12. Probar en Swagger UI
-1. Ve a `http://127.0.0.1:8000/api/docs/`
-2. Haz clic en **Authorize** (candado verde)
-3. Obtén un token en `/api/token/`
-4. Ingresa: `Bearer tu_access_token`
-5. Prueba los endpoints protegidos
-
 Documentación extra:
-- `https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html`
+- https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html

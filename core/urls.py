@@ -19,9 +19,18 @@ from django.urls import path, include
 # Importando SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView para Swagger/OpenAPI
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
+# Importando TokenObtainPairView, TokenRefreshView para JWT Authentication
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
+
+    # Rutas para JWT Authentication
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),    
     
     # Estableciendo rutas para Swagger/OpenAPI
     # Schema
