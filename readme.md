@@ -1,4 +1,10 @@
-# API con Django REST Framework - Paso a Paso
+# Django REST API con JWT y OpenAPI (Swagger)
+
+API productiva con Django 6 y DRF, autenticación robusta con JWT.
+Documentación interactiva y auto-generada con Swagger/OpenAPI.
+CRUD de tareas listo para integrarse con frontends modernos vía CORS.
+
+![Preview](docs/preview.png)
 
 ## 1. Crear entorno virtual y activarlo
 ```bash

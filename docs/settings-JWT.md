@@ -163,4 +163,4 @@ class TaskViewSet(viewsets.ModelViewSet):
 ```
 
 Documentación extra:
-- https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
+- `https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html`
